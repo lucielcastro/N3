@@ -1,5 +1,5 @@
-from N3.class_funcao import Funcao
-from N3.conexao import connection
+from class_funcao import Funcao
+from conexao import connection
 
 class Funcioario:
    def __init__(self, cpf: str, nome: str, funcao: Funcao, salario: float, telefone: str ):

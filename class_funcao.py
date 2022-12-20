@@ -1,4 +1,4 @@
-from N3.conexao import connection
+from conexao import connection
 
 class Funcao:
    def __init__(self, cod, nome):

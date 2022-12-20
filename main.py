@@ -1,6 +1,6 @@
 
-from N3.class_funcao import Funcao
-from N3.class_funcionario import Funcioario
+from class_funcao import Funcao
+from class_funcionario import Funcioario
 
 op = 1
 while op !=0:
