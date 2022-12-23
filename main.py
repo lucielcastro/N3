@@ -58,13 +58,12 @@ while op !=0:
          
          if op3 == 1:
             print('\n******* CADASTRAR FUNCIONARIO ******')
-            cpf = input('Informe cpf: ')
-            nome = input('Informe nome: ')
-            funcao = input('Nome da Funcao: ')
-            salario = input('Salario: ')
-            telefone = input('Telefone: ')
-            obj = Funcioario(cpf, nome, funcao, salario, telefone )
-            Funcioario.cadastrar_funcionario(obj)
+            obj = Funcioario( cpf = input('Informe cpf: '),
+            nome = input('Informe nome: '),
+            funcao = input('Nome da Funcao: '),
+            salario = input('Salario: '),
+            telefone = input('Telefone: '))
+            obj.cadastrar_funcionario()
 
          elif op3 == 2:
             print('\n******* PESQUISAR FUNCIONARIO ******')
