@@ -5,13 +5,30 @@ class Funcao:
       self.cod = cod
       self.nome = nome
    
+   def verificar_lista_vazia():
+      lista_funcao = Funcao.selecionar_tudo_funcao()
+      return len(lista_funcao)
+   
+   def buscar_funcao(cod_busca):
+      lista_funcao = Funcao.selecionar_tudo_funcao()
+      for index in lista_funcao:
+         if index['cod'] == cod_busca:
+            print(f'Funcao encontrada!')
+            return index['cod']
+      print('Funcao não cadastrada na base de dados!')
+      novo_cod = input('Informe codigo novamente: ')
+      Funcao.buscar_funcao(novo_cod)
+   
    def cadastrar_funcao(self):
       with connection.cursor() as c:
-        # Create a new record
-         sql = f"INSERT INTO funcao (cod, nome)" + f"VALUES ('{self.cod}', '{self.nome}')"
-         c.execute(sql)
-         connection.commit()
-         print('Cadastrado com sucesso!')
+         codigo = Funcao.buscar_funcao(self.cod)
+         if codigo == self.cod:
+            print('Funcao não pode ser cadastrada, pois já se cadastrada no sistema')
+         else:
+            sql = f"INSERT INTO funcao (cod, nome)" + f"VALUES ('{self.cod}', '{self.nome}')"
+            c.execute(sql)
+            connection.commit()
+            print('Cadastrado com sucesso!')
    
    def selecionar_tudo_funcao():
       with connection.cursor() as c:
@@ -31,20 +48,6 @@ class Funcao:
       novo_cod = input('Informe codigo novamente: ')
       Funcao.pesquisar_funcao(novo_cod)
 
-   def verificar_lista_vazia():
-      lista_funcao = Funcao.selecionar_tudo_funcao()
-      return len(lista_funcao)
-   
-   def buscar_funcao(cod_busca):
-      lista_funcao = Funcao.selecionar_tudo_funcao()
-      for index in lista_funcao:
-         if index['cod'] == cod_busca:
-            print(f'Funcao encontrada!')
-            return index['cod']
-      print('Funcao não cadastrada na base de dados!')
-      novo_cod = input('Informe codigo novamente: ')
-      Funcao.buscar_funcao(novo_cod)
-
    def editar_funcao(self):
       with connection.cursor() as c:
          codigo = Funcao.buscar_funcao(self.cod)
@@ -57,12 +60,14 @@ class Funcao:
    
    def deletar_funcao(self):
       with connection.cursor() as c:
-         codigo = Funcao.buscar_funcao(self.cod)
-         sql = f"DELETE FROM funcao WHERE cod = '{codigo}'"
-         c.execute(sql)
-         connection.commit()
-         print('Deletado com sucesso!')
-
+         try:
+            codigo = Funcao.buscar_funcao(self.cod)
+            sql = f"DELETE FROM funcao WHERE cod = '{codigo}'"
+            c.execute(sql)
+            connection.commit()
+            print('Deletado com sucesso!')
+         except:
+            print('Error: Funcao nao pode ser deletada, pois ha funcionario cadastrado com essa funcao!')
    
 
 
