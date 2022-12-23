@@ -61,7 +61,7 @@ while op !=0:
             obj = Funcioario( cpf = input('Informe cpf: '),
             nome = input('Informe nome: '),
             funcao = input('Nome da Funcao: '),
-            salario = input('Salario: '),
+            salario = float(input('Salario: ')),
             telefone = input('Telefone: '))
             obj.cadastrar_funcionario()
 
