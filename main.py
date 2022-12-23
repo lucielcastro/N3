@@ -55,7 +55,7 @@ while op !=0:
          print('#  1. Cadastrar Funcionario\n#  2. Pesquisar Funcionario\n#  3. Editar Funcionario\n#  4. Deletar Funcionario \n#  0. Voltar ao Menu Principal')
          print('####################################')
          op3=int(input('\nInforme uma das opcoes acima: '))
-
+         
          if op3 == 1:
             print('\n******* CADASTRAR FUNCIONARIO ******')
             cpf = input('Informe cpf: ')
