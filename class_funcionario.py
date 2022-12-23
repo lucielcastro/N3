@@ -9,40 +9,29 @@ class Funcioario:
       self.salario = salario
       self.telefone = telefone
    
-   def buscar_id_funcao(nome_busca):
-      res_all = Funcao.selecionar_tudo_funcao()
-      for index in res_all:
-         if index['nome'] == nome_busca:
-            print(f'Funcao encontrada!')
-            return index['id']
-      print('Funcao não cadastrada na base de dados!')
-      novo_nome = input('Informe nome novamente: ')
-      Funcioario.buscar_id_funcao(novo_nome)
    
-   def buscar_funcionario(cpf_busca):
+   def buscar_funcionario_cadastro(cpf_busca):
       with connection.cursor() as c:
          sql = f"SELECT * FROM funcionario "
          c.execute(sql)
          res_all = c.fetchall()
          for index in res_all:
             if index['cpf'] == cpf_busca:
-               print(f'Funcionario encontrado!')
                return index['cpf']
-         print('Funcionario não cadastrado na base de dados!')
-         cpf_nome = input('Informe CPF novamente: ')
-         Funcioario.buscar_funcionario(cpf_nome)
    
    def cadastrar_funcionario(self):
       with connection.cursor() as c:
-         cpf_busca = Funcioario.buscar_funcionario(self.cpf)
+         cpf_busca = Funcioario.buscar_funcionario_cadastro(self.cpf)
          if cpf_busca == self.cpf:
-            print('Funcionaro já cadastrado!')
+            print('Funcionario já cadastrado!')
          else:
-            busca_id_funcao = Funcioario.buscar_id_funcao(self.funcao)
+            busca_id_funcao = Funcao.buscar_id_funcao(self.funcao)
             sql = f"INSERT INTO funcionario (cpf, nome, funcao, salario, telefone)" + f" VALUES ( '{self.cpf}','{self.nome}','{busca_id_funcao}','{self.salario}', '{self.telefone}')"
             c.execute(sql)
             connection.commit()
             print('Cadastrado com sucesso!')
+         
+
    
    def pesquisar_funcionario(cpf_busca):
       with connection.cursor() as c:
@@ -88,8 +77,8 @@ class Funcioario:
    
    def deletar_funcionario(self):
       with connection.cursor() as c:
-         nome = Funcioario.buscar_funcionario(self.nome)
-         sql = f"DELETE FROM funcionario WHERE nome = '{nome}'"
+         cpf_busca = Funcioario.buscar_funcionario(self.cpf)
+         sql = f"DELETE FROM funcionario WHERE cpf = '{cpf_busca}'"
          c.execute(sql)
          connection.commit()
          print('Deletado com sucesso!')

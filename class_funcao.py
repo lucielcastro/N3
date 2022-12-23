@@ -23,7 +23,7 @@ class Funcao:
       with connection.cursor() as c:
          codigo = Funcao.buscar_funcao(self.cod)
          if codigo == self.cod:
-            print('Funcao não pode ser cadastrada, pois já se cadastrada no sistema')
+            print('Funcao não pode ser cadastrada, pois já se encontra cadastrada no sistema')
          else:
             sql = f"INSERT INTO funcao (cod, nome)" + f"VALUES ('{self.cod}', '{self.nome}')"
             c.execute(sql)
@@ -68,6 +68,16 @@ class Funcao:
             print('Deletado com sucesso!')
          except:
             print('Error: Funcao nao pode ser deletada, pois ha funcionario cadastrado com essa funcao!')
+
+   def buscar_id_funcao(nome_busca):
+      res_all = Funcao.selecionar_tudo_funcao()
+      for index in res_all:
+         if index['nome'] == nome_busca:
+            print(f'Funcao encontrada!')
+            return index['id']
+      print('Funcao não cadastrada na base de dados!')
+      novo_nome = input('Informe nome novamente: ')
+      Funcao.buscar_id_funcao(novo_nome)
    
 
 

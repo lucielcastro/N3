@@ -79,5 +79,5 @@ while op !=0:
 
          elif op3 == 4:
             print('\n******** DELETAR FUNCIONARIO ********')
-            obj = Funcioario(cpf = '', 
-                      nome = input('Informe nome: '),funcao = 0, salario = 0.0, telefone = '' ).deletar_funcionario()
+            obj = Funcioario(cpf = input('Informe CPF: '), 
+                      nome = '',funcao = 0, salario = 0.0, telefone = '' ).deletar_funcionario()
