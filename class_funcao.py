@@ -20,8 +20,15 @@ class Funcao:
       Funcao.buscar_funcao(novo_cod)
       return index['cod']
    
+   def buscar_funcao_cadastro(cod_busca):
+      lista_funcao = Funcao.selecionar_tudo_funcao()
+      for index in lista_funcao:
+         if index['cod'] == cod_busca:
+            print(f'Funcao encontrada!')
+            return index['cod']
+   
    def cadastrar_funcao(self):
-      cod_pesq = Funcao.buscar_funcao(self.cod)
+      cod_pesq = Funcao.buscar_funcao_cadastro(self.cod)
       if cod_pesq != self.cod:
          nome = input('Informe nome: ')
          with connection.cursor() as c:
