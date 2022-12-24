@@ -63,20 +63,31 @@ while op !=0:
             funcao = input('Nome da Funcao: '),
             salario = float(input('Salario: ')),
             telefone = input('Telefone: '))
-            obj.cadastrar_funcionario()
+            Funcioario.cadastrar_funcionario(obj)
+           
 
          elif op3 == 2:
             print('\n******* PESQUISAR FUNCIONARIO ******')
-            cpf = input('Informe CPF do Funcionario: ')
-            Funcioario.pesquisar_funcionario(cpf)
+            if Funcioario.verificar_lista_vazia_funcionario() != 0:
+               cpf = input('Informe CPF do Funcionario: ')
+               Funcioario.pesquisar_funcionario(cpf)
+            else:
+               print('NAO HA FUNCIONARIO CADASTRADO NO SISTEMA')
 
          elif op3 == 3:
             print('\n******** EDITAR FUNCIONARIO ********')
-            cpf = input('Informe CPF do Funcionario a ser editado: ')
-            obj = Funcioario(cpf, nome='', funcao = 0, salario = 0.0, telefone = '' )
-            Funcioario.editar_funcionario(obj)
+            if Funcioario.verificar_lista_vazia_funcionario() != 0:
+               cpf = input('Informe CPF do Funcionario a ser editado: ')
+               obj = Funcioario(cpf, nome='', funcao = 0, salario = 0.0, telefone = '' )
+               Funcioario.editar_funcionario(obj)
+            else:
+               print('NAO HA FUNCIONARIO CADASTRADO NO SISTEMA')
 
          elif op3 == 4:
             print('\n******** DELETAR FUNCIONARIO ********')
-            obj = Funcioario(cpf = input('Informe CPF: '), 
+            if Funcioario.verificar_lista_vazia_funcionario() != 0:
+               obj = Funcioario(cpf = input('Informe CPF: '), 
                       nome = '',funcao = 0, salario = 0.0, telefone = '' ).deletar_funcionario()
+            else:
+               print('NAO HA FUNCIONARIO CADASTRADO NO SISTEMA')
+

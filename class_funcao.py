@@ -18,13 +18,10 @@ class Funcao:
       print('Funcao não cadastrada na base de dados!')
       novo_cod = input('Informe codigo novamente: ')
       Funcao.buscar_funcao(novo_cod)
+      return index['cod']
    
    def cadastrar_funcao(self):
       with connection.cursor() as c:
-         codigo = Funcao.buscar_funcao(self.cod)
-         if codigo == self.cod:
-            print('Funcao não pode ser cadastrada, pois já se encontra cadastrada no sistema')
-         else:
             sql = f"INSERT INTO funcao (cod, nome)" + f"VALUES ('{self.cod}', '{self.nome}')"
             c.execute(sql)
             connection.commit()
@@ -47,17 +44,32 @@ class Funcao:
       print('Funcao não cadastrada na base de dados!')
       novo_cod = input('Informe codigo novamente: ')
       Funcao.pesquisar_funcao(novo_cod)
+      return index['cod']
 
    def editar_funcao(self):
       with connection.cursor() as c:
          codigo = Funcao.buscar_funcao(self.cod)
-         name = input('Informe o novo nome da funcao:')
-         cod = input('Informe o novo codigo da Funca: ')
-         sql = f"UPDATE funcao SET cod = '{cod}', nome = '{name}' WHERE cod = '{codigo}'"
-         c.execute(sql)
-         connection.commit()
-         print('Dados atualizados com sucesso!')
+         opcesEditar = None
+         while (opcesEditar != 0):
+            print('--------------------------')
+            print('\n1 - Novo codigo\n2 - Novo nome\n0 - Voltar ao Menu do Funcionario')
+            print('--------------------------')
+            opcesEditar = int(input('Digite o numero da opcão que deseja fazer: '))
+
+            if opcesEditar == 1:
+               codig = input('Informe o novo codigo da funcao:')
+               sql = f"UPDATE funcao SET cod = '{codig}' WHERE cod = '{codigo}'"
+               c.execute(sql)
+               connection.commit()
+               print('Dados atualizados com sucesso!')
    
+            if opcesEditar == 2:
+               nome = input('Informe o novo nome da Funca: ')
+               sql = f"UPDATE funcao SET nome = '{nome}' WHERE cod = '{codigo}'"
+               c.execute(sql)
+               connection.commit()
+               print('Dados atualizados com sucesso!')
+         
    def deletar_funcao(self):
       with connection.cursor() as c:
          try:
@@ -74,10 +86,12 @@ class Funcao:
       for index in res_all:
          if index['nome'] == nome_busca:
             print(f'Funcao encontrada!')
+            print(index['id'])
             return index['id']
       print('Funcao não cadastrada na base de dados!')
       novo_nome = input('Informe nome novamente: ')
       Funcao.buscar_id_funcao(novo_nome)
+      return index['id']
    
 
 
