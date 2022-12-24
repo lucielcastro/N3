@@ -2,6 +2,13 @@
 from class_funcao import Funcao
 from class_funcionario import Funcioario
 
+'''
+#######################################################
+-------------- LUCIEL SOUSA CASTRO -------------------
+------------ Kayo Vinicius Silva Mendes ---------------
+########################################################
+
+'''
 op = 1
 while op !=0:
    print('\n********** MENU PRINCIPAL **********')

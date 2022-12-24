@@ -59,7 +59,6 @@ class Funcao:
       return index['cod']
 
    def editar_funcao(self):
-      with connection.cursor() as c:
          codigo = Funcao.buscar_funcao(self.cod)
          opcesEditar = None
          while (opcesEditar != 0):
@@ -69,18 +68,20 @@ class Funcao:
             opcesEditar = int(input('Digite o numero da opcão que deseja fazer: '))
 
             if opcesEditar == 1:
-               codig = input('Informe o novo codigo da funcao:')
-               sql = f"UPDATE funcao SET cod = '{codig}' WHERE cod = '{codigo}'"
-               c.execute(sql)
-               connection.commit()
-               print('Dados atualizados com sucesso!')
-   
+               with connection.cursor() as p:
+                  codig = input('Informe o novo codigo da funcao:')
+                  sql = f"UPDATE funcao SET cod = '{codig}' WHERE cod = '{codigo}'"
+                  p.execute(sql)
+                  connection.commit()
+                  print('Dados atualizados com sucesso!')
+
             if opcesEditar == 2:
-               nome = input('Informe o novo nome da Funca: ')
-               sql = f"UPDATE funcao SET nome = '{nome}' WHERE cod = '{codigo}'"
-               c.execute(sql)
-               connection.commit()
-               print('Dados atualizados com sucesso!')
+               with connection.cursor() as c:
+                  nome = input('Informe o novo nome da Funca: ')
+                  sql = f"UPDATE funcao SET nome = '{nome}' WHERE cod = '{codigo}'"
+                  c.execute(sql)
+                  connection.commit()
+                  print('Dados atualizados com sucesso!')
          
    def deletar_funcao(self):
       with connection.cursor() as c:
