@@ -9,13 +9,13 @@ class Funcioario:
         self.funcao = funcao
         self.salario = salario
         self.telefone = telefone
-      
+
     def verificar_lista_vazia_funcionario():
-      with connection.cursor() as c:
-         sql = f"SELECT * FROM funcionario "
-         c.execute(sql)
-         res_all = c.fetchall()
-         return len(res_all)
+        with connection.cursor() as c:
+            sql = f"SELECT * FROM funcionario "
+            c.execute(sql)
+            res_all = c.fetchall()
+            return len(res_all)
 
     def buscar_funcionario_cadastro(cpf_busca):
         with connection.cursor() as c:
@@ -30,13 +30,13 @@ class Funcioario:
         with connection.cursor() as c:
             cpf_busca = Funcioario.buscar_funcionario_cadastro(self.cpf)
             if cpf_busca != self.cpf:
-               busca_id_funcao = Funcao.buscar_id_funcao(self.funcao)
-               sql = f"INSERT INTO funcionario (cpf, nome, funcao, salario, telefone) VALUES ('{self.cpf}','{self.nome}','{busca_id_funcao}','{self.salario}','{self.telefone}')"
-               c.execute(sql)
-               connection.commit()
-               print('Cadastrado com sucesso!')
+                busca_id_funcao = Funcao.buscar_id_funcao(self.funcao)
+                sql = f"INSERT INTO funcionario (cpf, nome, funcao, salario, telefone) VALUES ('{self.cpf}','{self.nome}','{busca_id_funcao}','{self.salario}','{self.telefone}')"
+                c.execute(sql)
+                connection.commit()
+                print('Cadastrado com sucesso!')
             else:
-               print('Funcionario já cadastrado!')
+                print('Funcionario já cadastrado!')
 
     def pesquisar_funcionario(cpf_busca):
         with connection.cursor() as c:
@@ -69,18 +69,51 @@ class Funcioario:
             return index['cpf']
 
     def editar_funcionario(self):
-         with connection.cursor() as c:
+        with connection.cursor() as c:
             cpf = Funcioario.buscar_funcionario(self.cpf)
-            name = input('Informe o novo nome:')
-            novo_cpf = input('Informe o novo CPF: ')
-            funcao_nome = input('Nome da funcao')
-            busca_id_funcao = Funcao.buscar_id_funcao(funcao_nome)
-            salario = float(input('Salario: '))
-            telefone = input('Telefone: ')
-            sql = f"UPDATE funcionario SET cpf = '{novo_cpf}', nome = '{name}', funcao = '{busca_id_funcao}', salario = '{salario}', telefone = '{telefone}' WHERE cpf = '{cpf}'"
-            c.execute(sql)
-            connection.commit()
-            print('Dados atualizados com sucesso!')
+            opcesEditar = None
+            while (opcesEditar != 0):
+                print('--------------------------')
+                print(
+                    '\n1 - Novo nome\n2 - Nova Função\n3 - Novo Salario\n4 - Novo Telefone\n0 - Voltar ao Menu do Funcionario')
+                print('--------------------------')
+                opcesEditar = int(
+                    input('Digite o numero da opcão que deseja fazer: '))
+
+                if (opcesEditar == 1):
+                    with connection.cursor() as c:
+                        novo_nome = input('Novo Nome: ')
+                        sql = f"UPDATE funcionario SET nome = '{novo_nome}' WHERE cpf = '{cpf}'"
+
+                        c.execute(sql)
+                        connection.commit()
+                        print('Alterado com sucesso')
+
+
+                elif (opcesEditar == 2):
+                    with connection.cursor() as c:
+                        nova_funcao = input('Nova Função: ')
+                        novo_id_funcao = Funcao.buscar_id_funcao(nova_funcao)
+                        sql = f"UPDATE funcionario SET funcao = '{novo_id_funcao}' WHERE cpf = '{cpf}'"
+
+                        c.execute(sql)
+                        connection.commit()
+                        print('Alterado com sucesso')
+                elif (opcesEditar == 3):
+                    with connection.cursor() as c:
+                        novo_salario = input('Novo Salario: ')
+                        sql = f"UPDATE funcionario SET salario = '{novo_salario}' WHERE cpf = '{cpf}'"
+                        c.execute(sql)
+                        connection.commit()
+                        print('Alterado com sucesso')
+
+                elif (opcesEditar == 4):
+                    with connection.cursor() as c:
+                        novo_telefone = input('Novo Telefone: ')
+                        sql = f"UPDATE funcionario SET telefone = '{novo_telefone}' WHERE cpf = '{cpf}'"
+                        c.execute(sql)
+                        connection.commit()
+                        print('Alterado com sucesso')
 
     def deletar_funcionario(self):
         with connection.cursor() as c:
