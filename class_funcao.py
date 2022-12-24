@@ -21,11 +21,16 @@ class Funcao:
       return index['cod']
    
    def cadastrar_funcao(self):
-      with connection.cursor() as c:
-            sql = f"INSERT INTO funcao (cod, nome)" + f"VALUES ('{self.cod}', '{self.nome}')"
+      cod_pesq = Funcao.buscar_funcao(self.cod)
+      if cod_pesq != self.cod:
+         nome = input('Informe nome: ')
+         with connection.cursor() as c:
+            sql = f"INSERT INTO funcao (cod, nome)" + f"VALUES ('{self.cod}', '{nome}')"
             c.execute(sql)
             connection.commit()
             print('Cadastrado com sucesso!')
+      else:
+         print('Funcao já cadastrado!')
    
    def selecionar_tudo_funcao():
       with connection.cursor() as c:

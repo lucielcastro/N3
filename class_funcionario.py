@@ -28,12 +28,15 @@ class Funcioario:
 
     def cadastrar_funcionario(self):
         with connection.cursor() as c:
-            # cpf_busca = Funcioario.buscar_funcionario_cadastro(self.cpf)
-            busca_id_funcao = Funcao.buscar_id_funcao(self.funcao)
-            sql = f"INSERT INTO funcionario (cpf, nome, funcao, salario, telefone) VALUES ('{self.cpf}','{self.nome}','{busca_id_funcao}','{self.salario}','{self.telefone}')"
-            c.execute(sql)
-            connection.commit()
-            print('Cadastrado com sucesso!')
+            cpf_busca = Funcioario.buscar_funcionario_cadastro(self.cpf)
+            if cpf_busca != self.cpf:
+               busca_id_funcao = Funcao.buscar_id_funcao(self.funcao)
+               sql = f"INSERT INTO funcionario (cpf, nome, funcao, salario, telefone) VALUES ('{self.cpf}','{self.nome}','{busca_id_funcao}','{self.salario}','{self.telefone}')"
+               c.execute(sql)
+               connection.commit()
+               print('Cadastrado com sucesso!')
+            else:
+               print('Funcionario já cadastrado!')
 
     def pesquisar_funcionario(cpf_busca):
         with connection.cursor() as c:

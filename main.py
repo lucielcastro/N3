@@ -20,7 +20,7 @@ while op !=0:
          if op2 == 1:
             print('\n********** CADASTRAR FUNCAO *********')
             obj = Funcao( cod = input('Informe codigo: '),
-                          nome = input('Informe nome: '))
+                          nome = '')
             obj.cadastrar_funcao()
    
          elif op2 == 2:
